@@ -1,0 +1,44 @@
+create database cairo;
+create database alex_replication;
+
+-------------------------------------------------------------------------------
+
+USE cairo;
+
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    p_name VARCHAR(255),
+    price DECIMAL(10, 2),
+    sex VARCHAR(10)
+);
+
+CREATE TABLE inventory (
+    pid INT PRIMARY KEY,
+    quantity INT,
+    FOREIGN KEY (pid) REFERENCES products(id)
+);
+CREATE TABLE transactions (
+    pid INT,
+    quantity INT,
+    p_state BIT,
+    p_timestamp TIMESTAMP,
+    PRIMARY KEY (pid, p_timestamp),
+    FOREIGN KEY (pid) REFERENCES products(id)
+);
+
+
+use alex_replication;
+
+CREATE TABLE inventory (
+    pid INT PRIMARY KEY,
+    quantity INT
+);
+
+CREATE TABLE transactions (
+    pid INT,
+    quantity INT,
+    p_state BIT,
+    p_timestamp TIMESTAMP,
+    PRIMARY KEY (pid, p_timestamp),
+);
+
