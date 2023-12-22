@@ -4,7 +4,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
-        <title>Product - Redstore</title>
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -124,8 +123,8 @@
         <!-----------------------js for product-------------------->
         
         <script>
-        let heads = ['Valentino', 'Velvet', 'Horizon', 'Bentley', 'Surf', 'Giorgio', 'Emper', 'Legend', 'Aventure', 'Dunhill']
-        let prices = [50, 35, 15, 48, 22, 21, 9, 30, 10, 40]
+            let heads = ['Valentino', 'Velvet', 'Horizon', 'Bentley', 'Surf', 'Giorgio', 'Emper', 'Legend', 'Aventure', 'Dunhill']
+            let prices = [50, 35, 15, 48, 22, 21, 9, 30, 10, 40]
 
             let url = window.location.search;
             let p = new URLSearchParams(url).get('p');
@@ -137,6 +136,7 @@
             price.textContent = `$${prices[p -1].toFixed(2)}`;
             description.textContent = 'Uomo Born In Roma Intense Eau de Parfum (EDP) is a captivating fragrance that embodies the spirit of modern masculinity with a touch of timeless elegance. This 100ml bottle is a luxurious olfactory experience that pays homage to the eternal city of Rome, capturing its rich history and contemporary allure.';
             image.src = `images//product-${p}.jpg`;
+            document.title = `Product - ${p}`;
         </script>
     </body>
 </html>
