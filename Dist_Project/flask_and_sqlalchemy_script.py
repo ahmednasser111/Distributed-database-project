@@ -1,27 +1,21 @@
-# from sqlalchemy import create_engine, text # pip install sqlalchemy
-# import pandas as pd
-
-# server = "20.25.37.239"
-# database = "test"
-# username = "sa"
-# password = "SQLServer123"
-# driver = "ODBC Driver 17 for SQL Server"
-# conn_str = f"mssql+pyodbc://{username}:{password}@{server}/{database}?driver={driver}"
-
-# engine = create_engine(conn_str)
-# con = engine.connect()
-# rs = con.execute(text(f"select * from testt"))
-# print(rs.fetchall())
-
-
-
-
-
+"""
+To use the code run this file
+"""
+# pip install flask
 from flask import Flask, render_template, request
 from flask import render_template
+from __init__ import db
 
 app = Flask(__name__)
 
+"""
+the @app.route(...) is used to move the user from one
+page to another.
+render_template("*.html") is for serving the html page
+to the browser.
+the POST and GET are for regalting the reading and writing
+to and from the web page.
+"""
 @app.route("/")
 def hello():
     return render_template("index.html")
@@ -38,8 +32,12 @@ def cart():
 def products():
     return render_template("products.html")
 
-@app.route("/products-details")
+@app.route("/products-details", methods=['GET', 'POST'])
 def products_details():
+    if request.method == 'POST':
+        pid = request.form.get('pid')
+        count = request.form.get('count')
+        db.cairo_update(pid, count)
     return render_template("products-details.html")
 
 

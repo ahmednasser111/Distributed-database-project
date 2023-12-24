@@ -554,3 +554,7 @@ form a{
     transform: translateX(3px);
 
 }
+
+#product-id{
+    display: none;
+}

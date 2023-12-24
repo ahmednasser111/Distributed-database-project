@@ -48,8 +48,18 @@
                         <p>Home / Perfumes</p>
                         <h1 id ="head"></h1> 
                         <h4 id="price"></h4>
-                        <input type="number" placeholder="n" value="1">
-                        <a href="/cart" class="btn">Commit</a>
+                        <form method="POST">
+                            <!-- <input type="number" placeholder="n" value="1" formmethod="post"> -->
+                            <!-- <input class="form-group" type="number" placeholder="n" value="1" name="count" id="count"> -->
+                            <!-- <input type="number" placeholder="n" value="1" name="count" id="count"> -->
+                            <!-- <input type="number" placeholder="n" value="1" name="count"> -->
+                            <input type="number" value="1" name="count">
+                            <input id="product-id" name="pid">
+                            <!-- <input type="number" placeholder="n" value="1"> -->
+                            <!-- <a href="/cart" class="btn">Commit</a> -->
+                            <!-- <a href="/cart" class="btn">Commit</a> -->
+                            <button class="btn" type="submit">Commit</button>
+                        </form>
                         <h3>Product Details <i class="fa fa-indent" ></i></h3>
                         <br>
                         <p id="description"></p>
@@ -104,12 +114,14 @@
             image = document.getElementById('productImg');
             head = document.getElementById('head');
             price = document.getElementById('price');
+            id = document.getElementById('product-id')
             description = document.getElementById('description');
             head.textContent = heads[p -1];
             price.textContent = `$${prices[p -1].toFixed(2)}`;
             description.textContent = 'Uomo Born In Roma Intense Eau de Parfum (EDP) is a captivating fragrance that embodies the spirit of modern masculinity with a touch of timeless elegance. This 100ml bottle is a luxurious olfactory experience that pays homage to the eternal city of Rome, capturing its rich history and contemporary allure.';
             image.src = `http://127.0.0.1:5000/static//product-${p}.jpg`;
             document.title = `Product - ${p}`;
+            id.setAttribute('value', p)
         </script>
     </body>
 </html>
