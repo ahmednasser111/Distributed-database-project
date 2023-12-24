@@ -466,14 +466,13 @@ th:last-child{
 }
 .form-container{
     background: #fff;
-    width:300px;
     height: 400px;
+    max-width: 500px;
     position: relative;
     text-align: center;
     padding: 20px 0;
     margin: auto;
     box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
-    overflow: hidden;
 }
 
 .form-container span{
@@ -489,15 +488,16 @@ th:last-child{
     display:inline-block;
 }
 .form-container form{
-    max-width: 300px;
+    max-width: 400px;   
     padding: 0 20px;
     position: absolute;
     top: 130px;
     transition: transform 1s;
 }
-
-form input{
+form .input{
     width: 100%;
+}
+form input{
     height: 30px;
     margin: 10px 0;
     padding: 0 10px;
@@ -518,19 +518,39 @@ form .btn:focus{
     left: -300px;
 }
 #RegForm{
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+#RegForm .box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+#RegForm .radio{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 form a{
     font-size: 12px;
 }
-
+@media screen and (max-width: 768px) {
+    form .radio{
+        font-size: 14px;
+    }
+    #RegForm{
+        padding: 10px;
+    }
+}
 #Indicator{
     width: 100px;
     border: none;
     background: #ff523b;
     height: 3px;
     margin-top: 8px;
-    transform: translateX(100px);
-    transition: transform 1s;
+    transform: translateX(3px);
 
 }

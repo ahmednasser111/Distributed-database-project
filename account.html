@@ -46,21 +46,26 @@
                     <div class="col-2">
                         <div class="form-container">
                             <div class="form-btn">
-                                <span onclick="login()">Login</span>
-                                <span onclick="register()">Register</span>
+                                <span>Login</span>
                                 <hr id="Indicator">
                             </div>
-                            <form id="LoginForm">
-                                <input type="text" placeholder="username">
-                                <input type="password" placeholder="password">
-                                <button type="submit" class="btn">Login</button>
-                                <a href="">Forgot password</a>
-                            </form>
-                            
                             <form id="RegForm">
-                                <input type="text" placeholder="username">
-                                <input type="email" placeholder="email">
-                                <input type="password" placeholder="password">
+                                <div class="radio">
+                                    <div class="box">
+                                            <input type="radio" name="server" id="cairo" value="cairo" checked>
+                                        <label for="cairo">Cairo</label>
+                                    </div>
+                                    <div class="box">
+                                        <input type="radio" name="server" id="alex" value="alex">
+                                        <label for="alex">Alexandria</label>
+                                    </div>
+                                    <div class="box">
+                                        <input type="radio" name="server" id="port" value="port">
+                                        <label for="port">Port Said</label>
+                                    </div>
+                                </div>
+                                <input type="email" placeholder="email" class="input">
+                                <input type="password" placeholder="password" class="input">
                                 <button type="submit" class="btn">Register</button>
                             </form>
                         </div>
@@ -105,23 +110,5 @@
             }
         </script>
         
-                <!-----------------------------------js for toggle form-------------------------------------->
-        <script>
-            var LoginForm=document.getElementById("LoginForm");
-            var RegForm=document.getElementById("RegForm");
-            var Indicator=document.getElementById("Indicator");
-            
-            function register(){
-                RegForm.style.transform="translateX(0px)";
-                LoginForm.style.transform="translateX(0px)";
-                Indicator.style.transform="translateX(100px)"
-            }
-            function login(){
-                RegForm.style.transform="translateX(300px)";
-                LoginForm.style.transform="translateX(300px)";
-                Indicator.style.transform="translateX(0px)";
-            }
-        </script>
-
     </body>
 </html>
