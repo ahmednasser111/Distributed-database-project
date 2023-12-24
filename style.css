@@ -377,12 +377,13 @@ select:focus{
     margin-top: 20px;
 }
 .single-product input{
-    width: 50px;
-    height: 40px;
-    padding-left: 10px;
+    width: 60px;
+    height: 50px;
+    margin-left: 10px;
+    padding: 10px;
     font-size: 20px;
     margin-right: 10px;
-    border: apx solid #ff523b;
+    border: 1px solid #ff523b;
 }
 input:focus{
     outline: none;
