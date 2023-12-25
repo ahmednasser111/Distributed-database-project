@@ -25,8 +25,8 @@ def hello():
 def account():
     data = request.form.get('server')
     os.environ['server'] = str(data)
-    print(data)
-    print(type(data))
+    # print(data)
+    # print(type(data))
     return render_template("account.html")
 
 @app.route("/cart")

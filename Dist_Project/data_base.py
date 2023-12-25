@@ -26,8 +26,8 @@ class data_base():
     """The connection function to connect to Cairo
     server and database"""
     def cairo_update(self, pid, count):
-        print(os.environ['server'])
-        return()
+        # print(os.environ['server'])
+        # return()
         self.update(pid, count, self.conn_strs['cairo'])
 
     """The connection function to connect to Port-Said
@@ -71,16 +71,16 @@ class data_base():
     """This will look in what server to update"""
     def up(self, pid, count):
         if os.environ['server'] == 'cairo':
-            print("up cairo")
-            return
+            # print("up cairo")
+            # return
             self.cairo_update(pid, count)
         elif os.environ['server'] == 'alex':
-            print("up alex")
-            return
+            # print("up alex")
+            # return
             self.alex_update(pid, count)
         elif os.environ['server'] == 'psaid':
-            print("up psaid")
-            return
+            # print("up psaid")
+            # return
             self.psaid_update(pid, count)
 
     """Since There will never be a wrong id
