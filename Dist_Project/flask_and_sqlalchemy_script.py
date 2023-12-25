@@ -5,6 +5,7 @@ To use the code run this file
 from flask import Flask, render_template, request
 from flask import render_template
 from __init__ import db
+import os
 
 app = Flask(__name__)
 
@@ -20,8 +21,12 @@ to and from the web page.
 def hello():
     return render_template("index.html")
 
-@app.route("/account")
+@app.route("/account", methods = ['GET', 'POST'])
 def account():
+    data = request.form.get('server')
+    os.environ['server'] = str(data)
+    print(data)
+    print(type(data))
     return render_template("account.html")
 
 @app.route("/cart")
@@ -37,7 +42,7 @@ def products_details():
     if request.method == 'POST':
         pid = request.form.get('pid')
         count = request.form.get('count')
-        db.cairo_update(pid, count)
+        db.up(pid, count)
     return render_template("products-details.html")
 
 

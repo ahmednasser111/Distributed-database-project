@@ -50,7 +50,8 @@
                                 <span>Login</span>
                                 <hr id="Indicator">
                             </div>
-                            <form id="RegForm">
+                            <form id="RegForm" method="POST">
+                            <!-- <form id="RegForm" method="POST"> -->
                                 <div class="radio">
                                     <div class="box">
                                             <input type="radio" name="server" id="cairo" value="cairo" checked>
@@ -61,12 +62,16 @@
                                         <label for="alex">Alexandria</label>
                                     </div>
                                     <div class="box">
-                                        <input type="radio" name="server" id="port" value="port">
-                                        <label for="port">Port Said</label>
+                                        <input type="radio" name="server" id="psaid" value="psaid">
+                                        <label for="psaid">Port Said</label>
                                     </div>
                                 </div>
                                 <input type="password" placeholder="password" class="input">
                                 <button type="submit" class="btn">Register</button>
+                                <!-- <button id="reg" type="button" class="btn">Register</button> -->
+                                <!-- <a href="www.youtube.com">
+                                </a> -->
+                                <!-- <button id="reg" type="button" class="btn" onclick="window.location.href='https://www.youtube.com'">Register</button> -->
                             </form>
                         </div>
                     </div>
@@ -98,7 +103,14 @@
         <!-----------------------------------js for toggle menu-------------------------------------->
         <script>
             var menuItems=document.getElementById("MenuItems");
-            
+            // document.getElementById("registerr").onclick = function() {
+            //     location.href = "http://127.0.0.1:5000/";
+            // };
+            // document.getElementById("reg").onclick = function(){
+            //     document.getElementById("reg").submit();
+            //     console.log("shit");
+            //     window.location.href = "/";
+            // };
             MenuItems.style.maxHeight="0px";
             function menutoggle(){
                 if(MenuItems.style.maxHeight == "0px"){
