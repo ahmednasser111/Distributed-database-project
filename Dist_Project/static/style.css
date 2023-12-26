@@ -571,3 +571,6 @@ form a{
     gap: 20px;
     align-items: center;
 }
+.active{
+    color: #ff523b;
+}
