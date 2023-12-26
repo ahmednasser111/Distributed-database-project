@@ -17,17 +17,21 @@ to the browser.
 the POST and GET are for regalting the reading and writing
 to and from the web page.
 """
-@app.route("/")
+@app.route("/about")
 def hello():
-    return render_template("index.html")
+    return render_template("about.html")
 
-@app.route("/account", methods = ['GET', 'POST'])
+@app.route("/search")
+def search():
+    return render_template("search.html")
+
+@app.route("/", methods = ['GET', 'POST'])
 def account():
     data = request.form.get('server')
     os.environ['server'] = str(data)
     # print(data)
     # print(type(data))
-    return render_template("account.html")
+    return render_template("index.html")
 
 @app.route("/cart")
 def cart():
