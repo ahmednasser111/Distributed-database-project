@@ -3,7 +3,7 @@ To use the code run this file
 """
 # pip install flask
 from flask import Flask, render_template, request
-from flask import render_template
+from flask import render_template,render_template_string
 from __init__ import db
 import os
 
@@ -21,9 +21,16 @@ to and from the web page.
 def hello():
     return render_template("about.html")
 
-@app.route("/search")
+@app.route("/search", methods=['GET', 'POST'])
 def search():
+    if request.method == 'POST':
+        cities=request.form.getlist('city')
+        products=request.form.getlist("product")
+        print(cities)
+        print(products)
+        db.query(cities,products)
     return render_template("search.html")
+
 
 @app.route("/", methods = ['GET', 'POST'])
 def account():
@@ -48,7 +55,6 @@ def products_details():
         count = request.form.get('count')
         db.up(pid, count)
     return render_template("products-details.html")
-
 
 if __name__ == "__main__":
     app.run()

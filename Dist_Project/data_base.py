@@ -26,12 +26,12 @@ class data_base():
     """Uncomment if all the servers are running
     as it will give an error and the code won't
     run if else"""
-    # c_engine = create_engine(conn_strs['cairo'])
-    # c_con = c_engine.connect()
+    c_engine = create_engine(conn_strs['cairo'])
+    c_con = c_engine.connect()
     # a_engine = create_engine(conn_strs['alex'])
     # a_con = a_engine.connect()
-    # p_engine = create_engine(conn_strs['psaid'])
-    # p_con = p_engine.connect()
+    p_engine = create_engine(conn_strs['psaid'])
+    p_con = p_engine.connect()
 
     """The connection function to connect to Cairo
     server and database"""
@@ -84,6 +84,39 @@ class data_base():
         elif os.environ['server'] == 'psaid':
             self.psaid_update(pid, count)
 
+    def query(self , cities , products_id):
+        results_cairo=[]
+
+        results_alex=[]
+
+        results_psaid=[]
+
+        products_id=tuple(products_id)
+        
+        query=text(f'''
+            SELECT p_name, sex, quantity
+            FROM products
+            JOIN inventory ON products.ID = inventory.pid
+            WHERE products.ID IN{products_id}
+        ''')
+        products_id=tuple(products_id)
+        if "psaid" in cities:
+            result=self.p_con.execute(query)
+            results_psaid.append(result.fetchall())
+            print(results_psaid) 
+            return results_psaid
+        if "cairo" in cities:
+            result=self.c_con.execute(query)
+            results_cairo.append(result.fetchall())
+            print(results_cairo) 
+            return results_cairo
+        if "alex" in cities:
+            result=self.a_con.execute(query)
+            results_alex.append(result.fetchall())
+            print(results_alex) 
+            return results_alex
+    
+    
     """Since There will never be a wrong id
     therefore we don't need id validation"""
     # def validate_id(sef, val, con):
