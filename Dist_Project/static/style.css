@@ -522,7 +522,7 @@ form .btn:focus{
     transform: translateX(-50%);
     width: 100%;
 }
-#RegForm .box{
+.box{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -557,4 +557,17 @@ form a{
 
 #product-id{
     display: none;
+}
+.check{
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.checklist li{
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
