@@ -52,16 +52,19 @@ class data_base():
     server and database"""
     def cairo_update(self, pid, count):
         self.update(pid, count, self.c_con)
+        self.update(pid, count, self.c_r_con)
 
     """The connection function to connect to Port-Said
     server and database"""
     def psaid_update(self, pid, count):
         self.update(pid, count, self.p_con)
+        self.update(pid, count, self.p_r_con)
 
     """The connection function to connect to Alexandria
     server and database"""
     def alex_update(self, pid, count):
         self.update(pid, count, self.a_con)
+        self.update(pid, count, self.a_r_con)
 
     """General updating method to be used for all
     servers and databases"""
@@ -74,8 +77,10 @@ class data_base():
             return
         if count < 0:
             con.execute(text(f'update inventory set quantity -= {abs(count)} where pid = {pid}'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 0)'))
         elif count > 0:
             con.execute(text(f'update inventory set quantity += {abs(count)} where pid = {pid}'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 1)'))
         con.commit()
 
     """The validation for the count in order not to
