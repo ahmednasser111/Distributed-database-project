@@ -19,19 +19,34 @@ class data_base():
     driver = "ODBC Driver 17 for SQL Server"
     conn_strs = {
         'cairo': f"mssql+pyodbc://{username}:{password}@{servers['cairo']}/{'cairo'}?driver={driver}",
+        'alex_replication': f"mssql+pyodbc://{username}:{password}@{servers['cairo']}/{'alex_replication'}?driver={driver}",
         'psaid': f"mssql+pyodbc://{username}:{password}@{servers['psaid']}/{'portsaid'}?driver={driver}",
-        'alex': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'Alexandria'}?driver={driver}"
+        'cairo_replication': f"mssql+pyodbc://{username}:{password}@{servers['psaid']}/{'cairo_replication'}?driver={driver}",
+        'alex': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'Alexandria'}?driver={driver}",
+        'port_replication': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'port_replication'}?driver={driver}",
     }
+
+    """
+    Server : Alex => port_replication
+    Server : Cairo => alex_replication
+    Server : Psaid => cairo_replication
+    """
 
     """Uncomment if all the servers are running
     as it will give an error and the code won't
     run if else"""
-    # c_engine = create_engine(conn_strs['cairo'])
-    # c_con = c_engine.connect()
-    # a_engine = create_engine(conn_strs['alex'])
-    # a_con = a_engine.connect()
+    c_engine = create_engine(conn_strs['cairo'])
+    c_con = c_engine.connect()
+    a_engine = create_engine(conn_strs['alex'])
+    a_con = a_engine.connect()
     # p_engine = create_engine(conn_strs['psaid'])
     # p_con = p_engine.connect()
+    # c_r_engine = create_engine(conn_strs['cairo_replication'])
+    # c_r_con = c_engine.connect()
+    a_r_engine = create_engine(conn_strs['alex_replication'])
+    a_r_con = a_engine.connect()
+    p_r_engine = create_engine(conn_strs['port_replication'])
+    p_r_con = p_engine.connect()
 
     """The connection function to connect to Cairo
     server and database"""
