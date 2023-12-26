@@ -19,9 +19,18 @@ class data_base():
     driver = "ODBC Driver 17 for SQL Server"
     conn_strs = {
         'cairo': f"mssql+pyodbc://{username}:{password}@{servers['cairo']}/{'cairo'}?driver={driver}",
+        'alex_replication': f"mssql+pyodbc://{username}:{password}@{servers['cairo']}/{'alex_replication'}?driver={driver}",
         'psaid': f"mssql+pyodbc://{username}:{password}@{servers['psaid']}/{'portsaid'}?driver={driver}",
-        'alex': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'Alexandria'}?driver={driver}"
+        'cairo_replication': f"mssql+pyodbc://{username}:{password}@{servers['psaid']}/{'cairo_replication'}?driver={driver}",
+        'alex': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'Alexandria'}?driver={driver}",
+        'port_replication': f"mssql+pyodbc://{username}:{password}@{servers['alex']}/{'port_replication'}?driver={driver}",
     }
+
+    """
+    Server : Alex => port_replication
+    Server : Cairo => alex_replication
+    Server : Psaid => cairo_replication
+    """
 
     """Uncomment if all the servers are running
     as it will give an error and the code won't
@@ -37,16 +46,19 @@ class data_base():
     server and database"""
     def cairo_update(self, pid, count):
         self.update(pid, count, self.c_con)
+        self.update(pid, count, self.c_r_con)
 
     """The connection function to connect to Port-Said
     server and database"""
     def psaid_update(self, pid, count):
         self.update(pid, count, self.p_con)
+        self.update(pid, count, self.p_r_con)
 
     """The connection function to connect to Alexandria
     server and database"""
     def alex_update(self, pid, count):
         self.update(pid, count, self.a_con)
+        self.update(pid, count, self.a_r_con)
 
     """General updating method to be used for all
     servers and databases"""
@@ -59,8 +71,10 @@ class data_base():
             return
         if count < 0:
             con.execute(text(f'update inventory set quantity -= {abs(count)} where pid = {pid}'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 0)'))
         elif count > 0:
             con.execute(text(f'update inventory set quantity += {abs(count)} where pid = {pid}'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 1)'))
         con.commit()
 
     """The validation for the count in order not to
@@ -91,31 +105,41 @@ class data_base():
 
         results_psaid=[]
 
+        all_results=[]
+
         products_id=tuple(products_id)
-        
         query=text(f'''
             SELECT p_name, sex, quantity
             FROM products
             JOIN inventory ON products.ID = inventory.pid
-            WHERE products.ID IN{products_id}
+            WHERE products.ID IN {products_id}
         ''')
+        if len(products_id) ==1:
+            products_id=products_id[0]
+            query=text(f'''
+            SELECT p_name, sex, quantity
+            FROM products
+            JOIN inventory ON products.ID = inventory.pid
+            WHERE products.ID = {products_id}
+        ''')
+        
+        
         products_id=tuple(products_id)
         if "psaid" in cities:
             result=self.p_con.execute(query)
             results_psaid.append(result.fetchall())
             print(results_psaid) 
-            return results_psaid
+            all_results.append(results_psaid)
         if "cairo" in cities:
             result=self.c_con.execute(query)
             results_cairo.append(result.fetchall())
-            print(results_cairo) 
-            return results_cairo
+            print(results_cairo)
+            all_results.append(results_cairo) 
         if "alex" in cities:
             result=self.a_con.execute(query)
             results_alex.append(result.fetchall())
-            print(results_alex) 
-            return results_alex
-    
+            all_results.append(results_alex)
+        return all_results
     
     """Since There will never be a wrong id
     therefore we don't need id validation"""

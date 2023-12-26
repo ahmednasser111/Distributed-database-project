@@ -15,24 +15,12 @@
     <body>
         <!--<div class ="header">-->
         <div class="container">
-            <div class="navbar">
+            <div class="navbar" style="justify-content : center">
                 <div class="logo">
                     <a href="/"><img src="{{url_for('static', filename='logo.png')}}" width="125px"></a>
                     <!-- <a href="/"><img src="{{url_for('static', filename='logo.png')}}" width="125px"></a> -->
                 </div>
-                 <nav>
-                    <ul id="MenuItems">
-                        <li><a href="/">Account</a></li>
-                        <li><a href="/search">Search</a></li>
-                        <li><a href="/products">Products</a></li>
-                        <li><a href="/about">About</a></li>
-
-                    </ul>
-                </nav>
-                <a href="/cart"><img src="{{url_for('static', filename='cart.png')}}" width="30px" height="30px"></a>
-                <img src="{{url_for('static', filename='menu.png')}}" class="menu-icon" onClick="menutoggle()" >
             </div>
-           
         </div>
     <!--</div>-->
     
@@ -67,8 +55,9 @@
                                         <label for="psaid">Port Said</label>
                                     </div>
                                 </div>
-                                <input type="password" placeholder="password" class="input">
+                                <input type="password" name="password" placeholder="Password" class="input" required>
                                 <button type="submit" class="btn">Register</button>
+                
                                 <!-- <button id="reg" type="button" class="btn">Register</button> -->
                                 <!-- <a href="www.youtube.com">
                                 </a> -->

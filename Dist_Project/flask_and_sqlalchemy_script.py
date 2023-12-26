@@ -3,7 +3,7 @@ To use the code run this file
 """
 # pip install flask
 from flask import Flask, render_template, request
-from flask import render_template,render_template_string
+from flask import render_template
 from __init__ import db
 import os
 
@@ -32,13 +32,16 @@ def search():
     return render_template("search.html")
 
 
+
 @app.route("/", methods = ['GET', 'POST'])
 def account():
     data = request.form.get('server')
+    password = request.form.get('password')
     os.environ['server'] = str(data)
-    print(data)
-    print(type(data))
-    return render_template("index.html")
+    if str(password)==str(data)+'123':
+        return render_template("products.html")
+    else:
+        return render_template("index.html")
 
 @app.route("/cart")
 def cart():
