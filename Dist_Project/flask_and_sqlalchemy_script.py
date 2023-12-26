@@ -29,8 +29,8 @@ def search():
 def account():
     data = request.form.get('server')
     os.environ['server'] = str(data)
-    # print(data)
-    # print(type(data))
+    print(data)
+    print(type(data))
     return render_template("index.html")
 
 @app.route("/cart")
