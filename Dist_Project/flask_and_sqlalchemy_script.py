@@ -28,10 +28,12 @@ def search():
 @app.route("/", methods = ['GET', 'POST'])
 def account():
     data = request.form.get('server')
+    password = request.form.get('password')
     os.environ['server'] = str(data)
-    print(data)
-    print(type(data))
-    return render_template("index.html")
+    if str(password)==str(data)+'123':
+        return render_template("products.html")
+    else:
+        return render_template("index.html")
 
 @app.route("/cart")
 def cart():
