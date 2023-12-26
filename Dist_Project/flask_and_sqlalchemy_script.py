@@ -45,7 +45,8 @@ def account():
 
 @app.route("/cart")
 def cart():
-    return render_template("cart.html")
+    transactions = db.get_transactions()
+    return render_template("cart.html",transactions=transactions)
 
 @app.route("/products")
 def products():

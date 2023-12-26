@@ -41,15 +41,25 @@
         <div class="small-container cart-page">
         <table>
             <tr>
-                <th>Name</th>
-                <th>City</th>
-                <th>state</th>
+                <th>Product</th>
+                <th>State</th>
                 <th>Quantity</th>
                 <th>Time</th>
             </tr>
-            <tr>
-                
-            </tr>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.p_name }}</td>
+                    <td>
+                        {% if transaction.p_state %}
+                            Add
+                        {% else %}
+                            Remove
+                        {% endif %}
+                    </td>
+                    <td>{{ transaction.quantity }}</td>
+                    <td>{{ transaction.p_timestamp }}</td>   
+                </tr>
+            {% endfor %}
         </table>
         </div>
         

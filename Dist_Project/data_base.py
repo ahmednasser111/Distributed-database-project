@@ -77,10 +77,10 @@ class data_base():
             return
         if count < 0:
             con.execute(text(f'update inventory set quantity -= {abs(count)} where pid = {pid}'))
-            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 0)'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0,GETDATE())'))
         elif count > 0:
             con.execute(text(f'update inventory set quantity += {abs(count)} where pid = {pid}'))
-            con.execute(text(f'insert into transactions (pid, quantity, p_state) values ({pid}, {abs(count)}, 1)'))
+            con.execute(text(f'insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1,GETDATE())'))
         con.commit()
 
     """The validation for the count in order not to
@@ -146,6 +146,54 @@ class data_base():
             results_alex.append(result.fetchall())
             all_results.append(results_alex)
         return all_results
+
+    """This will look in what server to update"""
+    def up(self, pid, count):
+        if os.environ['server'] == 'cairo':
+            self.cairo_update(pid, count)
+        elif os.environ['server'] == 'alex':
+            self.alex_update(pid, count)
+        elif os.environ['server'] == 'psaid':
+            self.psaid_update(pid, count)
+
+    """This will look in what server to get transaction"""
+
+    def get_transactions(self):
+        server = os.environ['server']
+
+        if server == 'cairo':
+            return self.c_get_transactions()
+        elif server == 'alex':
+            return self.a_get_transactions()
+        elif server == 'psaid':
+            return self.p_get_transactions()
+
+    """The connection function to connect to Cairo
+    server and database"""
+
+    def c_get_transactions(self):
+        return self.get_transactions_from_db(self.c_con)
+
+    """The connection function to connect to Alexandria
+    server and database"""
+
+    def a_get_transactions(self):
+        return self.get_transactions_from_db(self.a_con)
+
+    """The connection function to connect to Port-Said
+    server and database"""
+
+    def p_get_transactions(self):
+        return self.get_transactions_from_db(self.p_con)
+
+    """The function to get data from transactions"""
+
+    def get_transactions_from_db(self, connection):
+        # Execute SQL query to select transactions
+        result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID;'))
+        transactions = result.fetchall()
+        return transactions
+
     
     """Since There will never be a wrong id
     therefore we don't need id validation"""
