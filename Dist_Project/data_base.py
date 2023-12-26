@@ -4,6 +4,7 @@
 from sqlalchemy import create_engine, text
 import pandas as pd
 import os
+from datetime import datetime
 
 """
 A class for us to use to access the database
@@ -66,6 +67,7 @@ class data_base():
         self.update(pid, count, self.a_con)
         self.update(pid, count, self.a_r_con)
 
+
     """General updating method to be used for all
     servers and databases"""
     def update(self, pid, count, connection):
@@ -75,12 +77,19 @@ class data_base():
         if type(count) != int:
             print("can't remove number higher than original number")
             return
+        current_datetime = datetime.now()
+        year = current_datetime.year
+        month = current_datetime.month
+        day = current_datetime.day
+        hour = current_datetime.hour
+        minute = current_datetime.minute
+        second = current_datetime.second
         if count < 0:
-            con.execute(text(f'update inventory set quantity -= {abs(count)} where pid = {pid}'))
-            con.execute(text(f'insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0,GETDATE())'))
+            con.execute(text(f"update inventory set quantity -= {abs(count)} where pid = {pid}"))
+            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
         elif count > 0:
-            con.execute(text(f'update inventory set quantity += {abs(count)} where pid = {pid}'))
-            con.execute(text(f'insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1,GETDATE())'))
+            con.execute(text(f"update inventory set quantity += {abs(count)} where pid = {pid}"))
+            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
         con.commit()
 
     """The validation for the count in order not to
