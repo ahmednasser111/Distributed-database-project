@@ -38,48 +38,20 @@
 
 			<div class="check">
 				<div class="box">
-				  <input type="checkbox" name="city" id="cairo" value="cairo" checked>
-			    <label for="cairo">Cairo</label>
-			</div>
-			<div class="box">
-			    <input type="checkbox" name="city" id="alex" value="alex" checked>
-			    <label for="alex">Alexandria</label>
-			</div>
-			<div class="box">
-			    <input type="checkbox" name="city" id="psaid" value="psaid" checked>
-			    <label for="psaid">Port Said</label>
-			</div>
+				    <input type="checkbox" name="city" id="cairo" value="cairo" checked>
+			        <label for="cairo">Cairo</label>
+			    </div>
+			    <div class="box">
+			        <input type="checkbox" name="city" id="alex" value="alex" checked>
+			        <label for="alex">Alexandria</label>
+			    </div>
+			    <div class="box">
+			        <input type="checkbox" name="city" id="psaid" value="psaid" checked>
+			        <label for="psaid">Port Said</label>
+			    </div>
 		  </div>
-
-		  <ul class="checklist">
-			<li><input type="checkbox" name="product" id="1" value="1">
-				<label for="1">Valentino</label></li>
-			<li><input type="checkbox" name="product" id="2" value="2">
-					<label for="2">Velvet</label></li>
-			<li><input type="checkbox" name="product" id="3" value="3">
-					<label for="3">Horizon</label></li>
-			<li><input type="checkbox" name="product" id="4" value="4">
-					<label for="4">Bentley</label></li>
-			<li><input type="checkbox" name="product" id="5" value="5">
-					<label for="5">Surf</label></li>
-					<li><input type="checkbox" name="product" id="6" value="6">
-						<label for="6">Giorgio</label></li>
-						<li><input type="checkbox" name="product" id="7" value="7">
-							<label for="7">Emper</label></li>
-							<li><input type="checkbox" name="product" id="8" value="8">
-								<label for="8">Legend</label></li>
-								<li><input type="checkbox" name="product" id="9" value="9">
-									<label for="9">Aventure</label></li>
-									<li><input type="checkbox" name="product" id="10" value="10">
-										<label for="10">Dunhill</label></li>
-			</ul>
-			<input type="submit" value="Search">						
-		</form>
-	</div>
-
-
-    <div class="small-container cart-page">
-        <table>
+    <div class="cont" style="display: flex;width: 100%;justify-content: space-between;">
+        <table class="results" style="width: 80%;">
             <tr>
                 <th>Product</th>
                 <th>State</th>
@@ -100,10 +72,39 @@
                 {% endfor %}
                 </tr>
             {% endfor %}
-        </table>
+        </table>        
+          
+        <div class="col-md-auto">
+            <ul class="checklist">
+                <li><input type="checkbox" name="product" id="1" value="1">
+                    <label for="1">Valentino</label></li>
+                <li><input type="checkbox" name="product" id="2" value="2">
+                        <label for="2">Velvet</label></li>
+                <li><input type="checkbox" name="product" id="3" value="3">
+                        <label for="3">Horizon</label></li>
+                <li><input type="checkbox" name="product" id="4" value="4">
+                        <label for="4">Bentley</label></li>
+                <li><input type="checkbox" name="product" id="5" value="5">
+                        <label for="5">Surf</label></li>
+                <li><input type="checkbox" name="product" id="6" value="6">
+                        <label for="6">Giorgio</label></li>
+                <li><input type="checkbox" name="product" id="7" value="7">
+                        <label for="7">Emper</label></li>
+                <li><input type="checkbox" name="product" id="8" value="8">
+                        <label for="8">Legend</label></li>
+                <li><input type="checkbox" name="product" id="9" value="9">
+                        <label for="9">Aventure</label></li>
+                <li><input type="checkbox" name="product" id="10" value="10">
+                        <label for="10">Dunhill</label></li>
+                </ul>
+                <input type="submit" value="Search">						
+            
         </div>
-
-
+      </div>
+            </form>
+        </div>
+      </div>
+	</div>
         
         <!----------------------------------footer------------------------------------->
         <div class ="footer">

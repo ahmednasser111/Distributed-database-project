@@ -83,19 +83,21 @@ class data_base():
         if type(count) != int:
             print("can't remove number higher than original number")
             return
-        current_datetime = datetime.now()
-        year = current_datetime.year
-        month = current_datetime.month
-        day = current_datetime.day
-        hour = current_datetime.hour
-        minute = current_datetime.minute
-        second = current_datetime.second
+        current_datetime = datetime.now().isoformat()
+        # year = current_datetime.year
+        # month = current_datetime.month
+        # day = current_datetime.day
+        # hour = current_datetime.hour
+        # minute = current_datetime.minute
+        # second = current_datetime.second
         if count < 0:
             con.execute(text(f"update inventory set quantity -= {abs(count)} where pid = {pid}"))
-            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
+            # con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
+            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{current_datetime}')"))
         elif count > 0:
             con.execute(text(f"update inventory set quantity += {abs(count)} where pid = {pid}"))
-            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
+            # con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
+            con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{current_datetime}')"))
         con.commit()
 
     """The validation for the count in order not to
@@ -163,6 +165,12 @@ class data_base():
     #     return all_results
 
     def query(self , cities , products_id):
+        all_items = self.connections['cairo'].execute(text(f"select id, p_name from products"))
+        all_items = all_items.fetchall()
+        items_dict = {}
+        for i in all_items:
+            if i[0] not in items_dict.keys():
+                items_dict[i[0]] = i[1]
         result1 = []
         for j in products_id:
             result2 = []
@@ -171,19 +179,13 @@ class data_base():
                 result3 = []
                 rs = self.connections[i].execute(text(f"select * from inventory where pid={j}"))
                 results = rs.fetchall()
-                result3.append(results[0][0])
+                result3.append(items_dict[results[0][0]])
                 result3.append(i)
                 result3.append(results[0][1])
                 result2.append(result3)
                 total += results[0][1]
             result2.append(['total', total])
             result1.append(result2)
-        print(result1)
-        for i in result1:
-            for j in i:
-                print(j)
-    
-        # return
         return result1
 
     """This will look in what server to update"""
@@ -229,7 +231,8 @@ class data_base():
 
     def get_transactions_from_db(self, connection):
         # Execute SQL query to select transactions
-        result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID;'))
+        # result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID;'))
+        result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID ORDER BY p_timestamp desc;'))
         transactions = result.fetchall()
         return transactions
 

@@ -26,11 +26,8 @@ def search():
     if request.method == 'POST':
         cities=request.form.getlist('city')
         products=request.form.getlist("product")
-        print(cities)
-        print(products)
         all_results = db.query(cities,products)
         return render_template("search.html", items=all_results)
-    # return render_template("search.html", items=all_results)
     else:
         return render_template("search.html")
 
