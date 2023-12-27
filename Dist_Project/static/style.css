@@ -574,3 +574,9 @@ form a{
 .active{
     color: #ff523b;
 }
+.cont{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}

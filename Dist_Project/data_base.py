@@ -40,10 +40,10 @@ class data_base():
     c_con = c_engine.connect()
     a_engine = create_engine(conn_strs['alex'])
     a_con = a_engine.connect()
-    # p_engine = create_engine(conn_strs['psaid'])
-    # p_con = p_engine.connect()
-    # c_r_engine = create_engine(conn_strs['cairo_replication'])
-    # c_r_con = c_r_engine.connect()
+    p_engine = create_engine(conn_strs['psaid'])
+    p_con = p_engine.connect()
+    c_r_engine = create_engine(conn_strs['cairo_replication'])
+    c_r_con = c_r_engine.connect()
     a_r_engine = create_engine(conn_strs['alex_replication'])
     a_r_con = a_r_engine.connect()
     p_r_engine = create_engine(conn_strs['port_replication'])
@@ -52,7 +52,7 @@ class data_base():
     connections = {
         "cairo": c_con,
         "alex": a_con,
-        # "psaid": p_con
+        "psaid": p_con
     }
 
     """The connection function to connect to Cairo
