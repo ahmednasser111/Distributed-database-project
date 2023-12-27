@@ -84,19 +84,12 @@ class data_base():
             print("can't remove number higher than original number")
             return
         current_datetime = datetime.now().isoformat()
-        # year = current_datetime.year
-        # month = current_datetime.month
-        # day = current_datetime.day
-        # hour = current_datetime.hour
-        # minute = current_datetime.minute
-        # second = current_datetime.second
+
         if count < 0:
             con.execute(text(f"update inventory set quantity -= {abs(count)} where pid = {pid}"))
-            # con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
             con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 0, '{current_datetime}')"))
         elif count > 0:
             con.execute(text(f"update inventory set quantity += {abs(count)} where pid = {pid}"))
-            # con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{year}-{month}-{day}T{hour}:{minute}:{second}')"))
             con.execute(text(f"insert into transactions (pid, quantity, p_state,p_timestamp) values ({pid}, {abs(count)}, 1, '{current_datetime}')"))
         con.commit()
 
@@ -231,13 +224,8 @@ class data_base():
 
     def get_transactions_from_db(self, connection):
         # Execute SQL query to select transactions
-        # result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID;'))
         result = connection.execute(text('SELECT  p_name,p_state,quantity,p_timestamp FROM transactions JOIN products ON pid = ID ORDER BY p_timestamp desc;'))
         transactions = result.fetchall()
         return transactions
 
     
-    """Since There will never be a wrong id
-    therefore we don't need id validation"""
-    # def validate_id(sef, val, con):
-    #     val = int(val)
