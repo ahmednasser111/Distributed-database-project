@@ -40,14 +40,20 @@ class data_base():
     c_con = c_engine.connect()
     a_engine = create_engine(conn_strs['alex'])
     a_con = a_engine.connect()
-    p_engine = create_engine(conn_strs['psaid'])
-    p_con = p_engine.connect()
-    c_r_engine = create_engine(conn_strs['cairo_replication'])
-    c_r_con = c_r_engine.connect()
+    # p_engine = create_engine(conn_strs['psaid'])
+    # p_con = p_engine.connect()
+    # c_r_engine = create_engine(conn_strs['cairo_replication'])
+    # c_r_con = c_r_engine.connect()
     a_r_engine = create_engine(conn_strs['alex_replication'])
     a_r_con = a_r_engine.connect()
     p_r_engine = create_engine(conn_strs['port_replication'])
     p_r_con = p_r_engine.connect()
+
+    connections = {
+        "cairo": c_con,
+        "alex": a_con,
+        # "psaid": p_con
+    }
 
     """The connection function to connect to Cairo
     server and database"""
@@ -113,48 +119,72 @@ class data_base():
         elif os.environ['server'] == 'psaid':
             self.psaid_update(pid, count)
 
+    # def query(self , cities , products_id):
+    #     results_cairo=[]
+
+    #     results_alex=[]
+
+    #     results_psaid=[]
+
+    #     all_results=[]
+
+    #     products_id=tuple(products_id)
+    #     query=text(f'''
+    #         SELECT p_name, sex, quantity
+    #         FROM products
+    #         JOIN inventory ON products.ID = inventory.pid
+    #         WHERE products.ID IN {products_id}
+    #     ''')
+    #     if len(products_id) ==1:
+    #         products_id=products_id[0]
+    #         query=text(f'''
+    #         SELECT p_name, sex, quantity
+    #         FROM products
+    #         JOIN inventory ON products.ID = inventory.pid
+    #         WHERE products.ID = {products_id}
+    #     ''')
+        
+        
+    #     products_id=tuple(products_id)
+    #     if "psaid" in cities:
+    #         result=self.p_con.execute(query)
+    #         results_psaid.append(result.fetchall())
+    #         print(results_psaid) 
+    #         all_results.append(results_psaid)
+    #     if "cairo" in cities:
+    #         result=self.c_con.execute(query)
+    #         results_cairo.append(result.fetchall())
+    #         print(results_cairo)
+    #         all_results.append(results_cairo) 
+    #     if "alex" in cities:
+    #         result=self.a_con.execute(query)
+    #         results_alex.append(result.fetchall())
+    #         all_results.append(results_alex)
+    #     return all_results
+
     def query(self , cities , products_id):
-        results_cairo=[]
-
-        results_alex=[]
-
-        results_psaid=[]
-
-        all_results=[]
-
-        products_id=tuple(products_id)
-        query=text(f'''
-            SELECT p_name, sex, quantity
-            FROM products
-            JOIN inventory ON products.ID = inventory.pid
-            WHERE products.ID IN {products_id}
-        ''')
-        if len(products_id) ==1:
-            products_id=products_id[0]
-            query=text(f'''
-            SELECT p_name, sex, quantity
-            FROM products
-            JOIN inventory ON products.ID = inventory.pid
-            WHERE products.ID = {products_id}
-        ''')
-        
-        
-        products_id=tuple(products_id)
-        if "psaid" in cities:
-            result=self.p_con.execute(query)
-            results_psaid.append(result.fetchall())
-            print(results_psaid) 
-            all_results.append(results_psaid)
-        if "cairo" in cities:
-            result=self.c_con.execute(query)
-            results_cairo.append(result.fetchall())
-            print(results_cairo)
-            all_results.append(results_cairo) 
-        if "alex" in cities:
-            result=self.a_con.execute(query)
-            results_alex.append(result.fetchall())
-            all_results.append(results_alex)
-        return all_results
+        result1 = []
+        for j in products_id:
+            result2 = []
+            total = 0
+            for i in cities:
+                result3 = []
+                rs = self.connections[i].execute(text(f"select * from inventory where pid={j}"))
+                results = rs.fetchall()
+                result3.append(results[0][0])
+                result3.append(i)
+                result3.append(results[0][1])
+                result2.append(result3)
+                total += results[0][1]
+            result2.append(['total', total])
+            result1.append(result2)
+        print(result1)
+        for i in result1:
+            for j in i:
+                print(j)
+    
+        # return
+        return result1
 
     """This will look in what server to update"""
     def up(self, pid, count):

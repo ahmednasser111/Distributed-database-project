@@ -28,8 +28,11 @@ def search():
         products=request.form.getlist("product")
         print(cities)
         print(products)
-        db.query(cities,products)
-    return render_template("search.html")
+        all_results = db.query(cities,products)
+        return render_template("search.html", items=all_results)
+    # return render_template("search.html", items=all_results)
+    else:
+        return render_template("search.html")
 
 
 

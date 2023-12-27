@@ -76,7 +76,34 @@
 			<input type="submit" value="Search">						
 		</form>
 	</div>
-        
+
+
+    <div class="small-container cart-page">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>State</th>
+                <th>Quantity</th>
+            </tr>
+            {% for i in items %}
+                {% for j in i %}
+                <tr>
+                    {% if j[0] == 'total' %}
+                        <td>{{j[0]}}</td>
+                        <td></td>
+                        <td>{{j[1]}}</td>
+                    {% else %}
+                        <td>{{j[0]}}</td>
+                        <td>{{j[1]}}</td>
+                        <td>{{j[2]}}</td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+
+
         
         <!----------------------------------footer------------------------------------->
         <div class ="footer">
