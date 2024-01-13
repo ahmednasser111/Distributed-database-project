@@ -1,0 +1,41 @@
+use Alexandria;
+INSERT INTO products (id, p_name, price, sex)
+VALUES
+  (1 , 'Valentino', 50, 'female' ),
+  (2 , 'Velvet'   , 35, 'male'   ),
+  (3 , 'Horizon'  , 15, 'male'   ),
+  (4 , 'Bentley'  , 48, 'female' ),
+  (5 , 'Surf'     , 22, 'male'   ),
+  (6 , 'Giorgio'  , 21, 'female' ),
+  (7 , 'Emper'    , 9 , 'female' ),
+  (8 , 'Legend'   , 30, 'male'   ),
+  (9 , 'Aventure' , 10, 'male'   ),
+  (10, 'Dunhill'  , 40, 'male'   );
+
+INSERT INTO inventory(pid,quantity)
+VALUES
+  (1 , 5 ),
+  (2 , 5 ),
+  (3 , 5 ),
+  (4 , 5 ),
+  (5 , 5 ),
+  (6 , 5 ),
+  (7 , 5 ),
+  (8 , 5 ),
+  (9 , 5 ),
+  (10, 5 );
+
+use port_replication;
+
+INSERT INTO inventory(pid,quantity)
+VALUES
+  (1 , 5 ),
+  (2 , 5 ),
+  (3 , 5 ),
+  (4 , 5 ),
+  (5 , 5 ),
+  (6 , 5 ),
+  (7 , 5 ),
+  (8 , 5 ),
+  (9 , 5 ),
+  (10, 5 );
