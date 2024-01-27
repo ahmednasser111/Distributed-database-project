@@ -19,12 +19,3 @@ This repository contains the source code for a distributed database inventory we
 - **Real-time Tracking:** Provides real-time tracking of inventory levels, allowing users to make informed decisions based on up-to-date information.
 
 - **User-Friendly Interface:** A user-friendly web interface facilitates easy navigation and interaction with the inventory management system.
-
-## Getting Started
-
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/distributed-database-inventory.git
-   cd distributed-database-inventory
-# Website link
-   [Live server](https://ahmednasser111.github.io/Distributed-database-project/)
